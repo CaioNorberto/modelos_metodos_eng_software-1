@@ -1,0 +1,15 @@
+raio = float(input('Entre com o valor do raio, para obter a área: '))
+area = 3.14 * (raio * raio)
+print("A área do círculo: {:.2f}".format(area))
+
+
+raio= float(input('digite o valor do raio pra obter a circunferencia:'))
+circunferencia= 2*3.14*raio
+print('a circunferencia é:', circunferencia)
+
+
+
+
+
+
+
