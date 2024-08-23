@@ -1,0 +1,119 @@
+class Jogo:
+    def __init__(self, titulo, classificacao_etaria, preco):
+        self.__titulo = titulo
+        self.__classificacao_etaria = classificacao_etaria
+        self.__preco = preco
+
+
+    def get_titulo(self):
+        return self.__titulo
+
+    def set_titulo(self, titulo):
+        self.__titulo = titulo
+
+    def get_classificacao_etaria(self):
+        return self.__classificacao_etaria
+
+    def set_classificacao_etaria(self, classificacao_etaria):
+        self.__classificacao_etaria = classificacao_etaria
+
+    def get_preco(self):
+        return self.__preco
+
+    def set_preco(self, preco):
+        self.__preco = preco
+
+    def aplicar_desconto(self, percentual):
+        desconto = self.__preco * (percentual / 100)
+        self.__preco -= desconto
+
+    def aumentar_preco(self, percentual):
+        aumento = self.__preco * (percentual / 100)
+        self.__preco += aumento
+
+    def atualizar_classificacao(self, nova_classificacao):
+        self.__classificacao_etaria = nova_classificacao
+
+    def to_string(self):
+        return f"Título: {self.__titulo}, Classificação Etária: {self.__classificacao_etaria}, Preço: R${self.__preco:.2f}"
+
+class Principal:
+    def __init__(self):
+        self.jogos = []
+
+    def menu(self):
+        while True:
+            print("\nMenu:")
+            print("1. Adicionar novo jogo")
+            print("2. Aplicar desconto no jogo")
+            print("3. Aumentar preço do jogo")
+            print("4. Atualizar classificação etária do jogo")
+            print("5. Mostrar detalhes dos jogos")
+            print("6. Sair")
+
+            opcao = input("Escolha uma opção: ")
+
+            if opcao == "1":
+                self.adicionar_novo_jogo()
+            elif opcao == "2":
+                self.aplicar_desconto_jogo()
+            elif opcao == "3":
+                self.aumentar_preco_jogo()
+            elif opcao == "4":
+                self.atualizar_classificacao_jogo()
+            elif opcao == "5":
+                self.mostrar_detalhes_jogos()
+            elif opcao == "6":
+                print("Saindo...")
+                break
+            else:
+                print("Opção inválida, tente novamente.")
+
+    def adicionar_novo_jogo(self):
+        titulo = input("Digite o título do jogo: ")
+        classificacao_etaria = input("Digite a classificação etária do jogo: ")
+        preco = float(input("Digite o preço do jogo: R$"))
+        jogo = Jogo(titulo, classificacao_etaria, preco)
+        self.jogos.append(jogo)
+        print("Jogo adicionado com sucesso!")
+
+    def aplicar_desconto_jogo(self):
+        self.mostrar_detalhes_jogos()
+        numero = int(input("Digite o numero do jogo para aplicar desconto: ")) - 1
+        percentual = float(input("Digite o percentual de desconto: "))
+        if 0 <= numero < len(self.jogos):
+            self.jogos[numero].aplicar_desconto(percentual)
+            print("Desconto aplicado com sucesso!",  )
+        else:
+            print("numero inválido.")
+
+    def aumentar_preco_jogo(self):
+        self.mostrar_detalhes_jogos()
+        numero = int(input("Digite o numero do jogo para aumentar o preço: ")) - 1
+        percentual = float(input("Digite o percentual de aumento: "))
+        if 0 <= numero < len(self.jogos):
+            self.jogos[numero].aumentar_preco(percentual)
+            print("Preço aumentado com sucesso!")
+        else:
+            print("numero inválido.")
+
+    def atualizar_classificacao_jogo(self):
+        self.mostrar_detalhes_jogos()
+        numero = int(input("Digite o numero do jogo para atualizar a classificação etária: ")) - 1
+        nova_classificacao = input("Digite a nova classificação etária: ")
+        if 0 <= numero < len(self.jogos):
+            self.jogos[numero].atualizar_classificacao(nova_classificacao)
+            print("Classificação etária atualizada com sucesso!")
+        else:
+            print("numero inválido.")
+
+    def mostrar_detalhes_jogos(self):
+        if not self.jogos:
+            print("Nenhum jogo cadastrado.")
+            return
+        for i, jogo in enumerate(self.jogos):
+            print(f"{i + 1}. {jogo.to_string()}")
+
+if __name__ == "__main__":
+    principal = Principal()
+    principal.menu()
